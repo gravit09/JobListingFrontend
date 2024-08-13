@@ -17,6 +17,7 @@ const JobList = () => {
         setLoading(false);
       }
     };
+    fetchProjects();
   }, []);
 
   if (loading) return <div>Loading...</div>;
