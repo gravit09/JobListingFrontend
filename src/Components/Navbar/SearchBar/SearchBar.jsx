@@ -25,7 +25,7 @@ function SearchBar() {
         />
       </div>
       <div class="flex py-3 px-4 rounded-lg text-gray-500 font-semibold cursor-pointer">
-        <span>All categorie</span>
+        <span>All categories</span>
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
