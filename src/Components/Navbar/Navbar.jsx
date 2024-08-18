@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo/logo.png";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,9 +32,18 @@ const Navbar = () => {
         </div>
         <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `text-sm ${
+                  isActive
+                    ? "text-blue-600 font-bold hover:text-blue-800"
+                    : "text-gray-400  hover:text-gray-500"
+                }`
+              }
+            >
               Home
-            </a>
+            </NavLink>
           </li>
 
           <li className="text-gray-300">
@@ -53,9 +63,18 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
+            <NavLink
+              to="/projects"
+              className={({ isActive }) =>
+                `text-sm ${
+                  isActive
+                    ? "text-blue-600 font-bold hover:text-blue-800"
+                    : "text-gray-400  hover:text-gray-500"
+                }`
+              }
+            >
               Projects
-            </a>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -74,9 +93,18 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Organizations
-            </a>
+            <NavLink
+              to="/orgs"
+              className={({ isActive }) =>
+                `text-sm ${
+                  isActive
+                    ? "text-blue-600 font-bold hover:text-blue-800"
+                    : "text-gray-400  hover:text-gray-500"
+                }`
+              }
+            >
+              Organisations
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -95,9 +123,18 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-blue-600 font-bold" href="#">
-              About Us
-            </a>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `text-sm ${
+                  isActive
+                    ? "text-blue-600 font-bold hover:text-blue-800"
+                    : "text-gray-400  hover:text-gray-500"
+                }`
+              }
+            >
+              About us
+            </NavLink>
           </li>
         </ul>
         <a
