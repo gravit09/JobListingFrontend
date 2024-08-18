@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getProjects } from "../../../api/project";
+import { getProjects } from "../../api/project/index";
 
-const JobList = () => {
+const ProjectListing = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -74,4 +74,4 @@ const JobList = () => {
   );
 };
 
-export default JobList;
+export default ProjectListing;
