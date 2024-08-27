@@ -1,8 +1,8 @@
 import React from "react";
-import ProjectListing from "../Components/ProjectListing/ProjectListing";
+import Example from "../Components/filterBox/filterBox";
 
 function Projects() {
-  return <ProjectListing />;
+  return <Example />;
 }
 
 export default Projects;
