@@ -1,23 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-//import { getProjects } from "../../api/project/index";
+import { getProjects } from "../../api/project";
 
 const ProjectListing = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/v1/repo/getRepo"
-        );
-        setProjects(response.data.data);
-        console.log(response.data.data);
+        const response = await getProjects();
+        setProjects(response);
         setLoading(false);
       } catch (error) {
-        setError("Failed to fetch projects.");
         setLoading(false);
       }
     };
@@ -35,12 +30,12 @@ const ProjectListing = () => {
           className="bg-white transform transition-transform duration-300 hover:scale-110 shadow-xl shadow-gray-100 w-full max-w-5xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between px-5 py-4 mb-4 rounded-md"
         >
           <div>
-            <h3 className="font-bold">{project.repoName}</h3>
+            <h3 className="font-bold">{project.title}</h3>
             <p className="text-gray-700 mt-1">
               {project.description.slice(0, 80)}
             </p>
             <div className="flex gap-2 mt-2">
-              {project.techStack.map((tag, index) => (
+              {project.tags.map((tag, index) => (
                 <span
                   key={index}
                   className="bg-gray-100 text-gray-700 rounded-full px-3 py-1 text-sm"
@@ -52,7 +47,7 @@ const ProjectListing = () => {
           </div>
           <div>
             <a
-              href={project.repoURL}
+              href={project.url}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center"
