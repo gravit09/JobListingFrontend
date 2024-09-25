@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo/logo.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -137,18 +137,18 @@ const Navbar = () => {
             </NavLink>
           </li>
         </ul>
-        <a
+        <Link
           className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-          href="#"
+          to="/login"
         >
-          Sign In
-        </a>
-        <a
+          Log In
+        </Link>
+        <Link
           className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          href="#"
+          to="/signup"
         >
           Sign up
-        </a>
+        </Link>
       </nav>
 
       {isMenuOpen && (
@@ -186,60 +186,52 @@ const Navbar = () => {
             </div>
             <ul>
               <li className="mb-1">
-                <a
+                <Link
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                  to="/"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li className="mb-1">
-                <a
+                <Link
+                  to="/projects"
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
                 >
-                  About Us
-                </a>
+                  Projects
+                </Link>
               </li>
               <li className="mb-1">
-                <a
+                <Link
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                  to="/orgs"
                 >
-                  Services
-                </a>
+                  Organisations
+                </Link>
               </li>
               <li className="mb-1">
-                <a
+                <Link
+                  to="/about"
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
                 >
-                  Pricing
-                </a>
-              </li>
-              <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
-                  Contact
-                </a>
+                  About
+                </Link>
               </li>
             </ul>
             <div className="mt-auto">
               <div className="pt-6">
-                <a
+                <Link
                   className="block px-4 py-3 mb-3 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl"
-                  href="#"
+                  to="/login"
+                >
+                  Log In
+                </Link>
+                <Link
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-gray-800 font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
+                  to="/signup"
                 >
                   Sign Up
-                </a>
-                <a
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-gray-800 font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
-                  href="#"
-                >
-                  Sign In
-                </a>
+                </Link>
               </div>
               <p className="my-4 text-xs text-center text-gray-400">
                 <span>Copyright © 2024</span>

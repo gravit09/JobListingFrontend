@@ -19,8 +19,10 @@ const ProjectListing = () => {
     fetchProjects();
   }, []);
 
+  console.log(projects);
+
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  // if (error) return <div>{error}</div>;
 
   return (
     <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gray-50 p-6 sm:py-12">
@@ -34,11 +36,11 @@ const ProjectListing = () => {
             <p className="text-gray-700 mt-1">
               {project.description.slice(0, 80)}
             </p>
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 flex-wrap">
               {project.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-gray-100 text-gray-700 rounded-full px-3 py-1 text-sm"
+                  className="bg-gray-100 text-gray-700 rounded-full text-sm justify-center justify-center p-2 whitespace-nowrap"
                 >
                   {tag}
                 </span>
