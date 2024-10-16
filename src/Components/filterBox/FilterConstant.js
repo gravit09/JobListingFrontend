@@ -4,7 +4,7 @@ export const sortOptions = [
   { name: "Newest", href: "#", current: false },
 ];
 
-export const filters = [
+export const Jobfilters = [
   {
     id: "Tech Stack",
     name: "Tech Stack",

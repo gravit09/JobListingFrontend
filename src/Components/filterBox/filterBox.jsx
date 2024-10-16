@@ -17,11 +17,13 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import ProjectListing from "../ProjectListing/ProjectListing";
 import { sortOptions } from "./FilterConstant";
-import { filters } from "./FilterConstant";
+import { Jobfilters } from "./FilterConstant";
+import { companyFilters } from "./orgFilterConstants";
+import { useRoute } from "../../store/navRouteStore";
+import OrganizationListing from "../orgList/OrgList";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,6 +31,8 @@ function classNames(...classes) {
 
 export default function Example() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const { activeRoute } = useRoute();
+  const filters = activeRoute === "jobs" ? Jobfilters : companyFilters;
 
   return (
     <div className="bg-white">
@@ -226,9 +230,13 @@ export default function Example() {
                   </Disclosure>
                 ))}
               </form>
-
+              {/* This is the Job listing component*/}
               <div className="lg:col-span-3">
-                <ProjectListing />
+                {activeRoute === "jobs" ? (
+                  <ProjectListing />
+                ) : (
+                  <OrganizationListing />
+                )}
               </div>
             </div>
           </section>

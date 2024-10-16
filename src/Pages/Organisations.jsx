@@ -1,7 +1,8 @@
 import React from "react";
+import Example from "../Components/filterBox/filterBox";
 
 function Organisations() {
-  return <div>This will be Organisations Page.</div>;
+  return <Example />;
 }
 
 export default Organisations;

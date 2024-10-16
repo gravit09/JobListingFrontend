@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProjects } from "../../api/project";
+import axios from "axios";
 
 const ProjectListing = () => {
   const [projects, setProjects] = useState([]);
@@ -10,8 +10,10 @@ const ProjectListing = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await getProjects();
-        setProjects(response);
+        const response = await axios.get(
+          "http://localhost:3000/api/job/alljobs"
+        );
+        setProjects(response.data.allJobs);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -47,12 +49,13 @@ const ProjectListing = () => {
           className="bg-white transform transition-transform duration-300 hover:scale-110 shadow-xl shadow-gray-100 w-full max-w-5xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between px-5 py-4 mb-4 rounded-md"
         >
           <div>
-            <h3 className="font-bold">{project.title}</h3>
-            <p className="text-gray-700 mt-1">
-              {project.description.slice(0, 80)}
-            </p>
+            <h3 className="font-bold">
+              {project.organizationName} |
+              <span className="text-gray-500"> {project.title}</span>
+            </h3>
+
             <div className="flex gap-2 mt-2 flex-wrap">
-              {project.tags.map((tag, index) => (
+              {project.requirements.skills.map((tag, index) => (
                 <span
                   key={index}
                   className="bg-gray-100 text-gray-700 rounded-full text-sm justify-center p-2 whitespace-nowrap"
@@ -64,12 +67,12 @@ const ProjectListing = () => {
           </div>
           <div>
             <a
-              href={project.url}
+              href={project.applyLink}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center"
             >
-              View Project
+              Apply
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"

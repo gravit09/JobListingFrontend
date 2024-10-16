@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo/logo.png";
 import { Link, NavLink } from "react-router-dom";
+import { useRoute } from "../../store/navRouteStore";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { setActiveRoute } = useRoute();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -72,6 +74,7 @@ const Navbar = () => {
                     : "text-gray-400  hover:text-gray-500"
                 }`
               }
+              onClick={() => setActiveRoute("jobs")}
             >
               Projects
             </NavLink>
@@ -102,6 +105,7 @@ const Navbar = () => {
                     : "text-gray-400  hover:text-gray-500"
                 }`
               }
+              onClick={() => setActiveRoute("orgs")}
             >
               Organisations
             </NavLink>

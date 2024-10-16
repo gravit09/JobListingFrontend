@@ -4,7 +4,9 @@ import Home from "./Pages/Home";
 import Projects from "./Pages/Projects";
 import Organisations from "./Pages/Organisations";
 import About from "./Pages/About";
-import Login from "./Pages/login";
+import Login from "./Pages/Login";
+import { RouteProvider } from "./store/navRouteStore";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -34,10 +36,11 @@ function App() {
       element: <Login />,
     },
   ]);
+
   return (
-    <>
+    <RouteProvider>
       <RouterProvider router={router} />
-    </>
+    </RouteProvider>
   );
 }
 
