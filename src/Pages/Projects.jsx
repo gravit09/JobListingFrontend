@@ -1,8 +1,8 @@
 import React from "react";
 import Example from "../Components/filterBox/filterBox";
 
-function Projects() {
+function Jobs() {
   return <Example />;
 }
 
-export default Projects;
+export default Jobs;

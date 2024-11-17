@@ -53,6 +53,7 @@ const ProjectListing = () => {
               {project.organizationName} |
               <span className="text-gray-500"> {project.title}</span>
             </h3>
+            <h4 className="mt-1 text-gray-500">{project.location}</h4>
 
             <div className="flex gap-2 mt-2 flex-wrap">
               {project.requirements.skills.map((tag, index) => (

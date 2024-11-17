@@ -1,11 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Routes/MainLayout";
 import Home from "./Pages/Home";
-import Projects from "./Pages/Projects";
 import Organisations from "./Pages/Organisations";
 import About from "./Pages/About";
 import Login from "./Pages/Login";
 import { RouteProvider } from "./store/navRouteStore";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { AuthProvider } from "./utils/AuthProvider";
+import Jobs from "./Pages/Projects";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,8 +20,8 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/projects",
-          element: <Projects />,
+          path: "/jobs",
+          element: <Jobs />,
         },
         {
           path: "/orgs",
@@ -27,7 +29,11 @@ function App() {
         },
         {
           path: "/about",
-          element: <About />,
+          element: (
+            <ProtectedRoute>
+              <About />
+            </ProtectedRoute>
+          ),
         },
       ],
     },
@@ -38,9 +44,11 @@ function App() {
   ]);
 
   return (
-    <RouteProvider>
-      <RouterProvider router={router} />
-    </RouteProvider>
+    <AuthProvider>
+      <RouteProvider>
+        <RouterProvider router={router} />
+      </RouteProvider>
+    </AuthProvider>
   );
 }
 

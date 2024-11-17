@@ -11,7 +11,7 @@ const OrganizationListing = () => {
     const fetchOrgs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/org/getAll"
+          "http://localhost:3000/api/org/getall"
         );
         setOrgs(response.data.allOrgs);
         setLoading(false);
@@ -45,9 +45,9 @@ const OrganizationListing = () => {
           className="bg-white transform transition-transform duration-300 hover:scale-110 shadow-xl shadow-gray-100 w-full max-w-5xl flex gap-4 items-center px-5 py-4 mb-4 rounded-md"
         >
           <img
-            src={org.imgUrl}
+            src={org.imageUrl}
             alt={`${org.name} banner`}
-            className="w-30 h-32 object-cover rounded-md"
+            className="w-28 h-24 object-contain rounded-md"
           />
           <div className="flex flex-col">
             <h3 className="font-bold">

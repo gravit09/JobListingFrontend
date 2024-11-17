@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import logo from "../../assets/logo/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useRoute } from "../../store/navRouteStore";
+import { useAuth } from "../../utils/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { setActiveRoute } = useRoute();
+  const { isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  //to Logout User
+  const logoutHandler = () => {
+    logout();
   };
 
   return (
@@ -66,7 +73,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/projects"
+              to="/jobs"
               className={({ isActive }) =>
                 `text-sm ${
                   isActive
@@ -76,7 +83,7 @@ const Navbar = () => {
               }
               onClick={() => setActiveRoute("jobs")}
             >
-              Projects
+              Jobs
             </NavLink>
           </li>
           <li className="text-gray-300">
@@ -141,20 +148,30 @@ const Navbar = () => {
             </NavLink>
           </li>
         </ul>
-        <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-          to="/login"
-        >
-          Log In
-        </Link>
-        <Link
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          to="/signup"
-        >
-          Sign up
-        </Link>
+        {isAuthenticated ? (
+          <Link
+            className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+            onClick={logoutHandler}
+          >
+            Log Out
+          </Link>
+        ) : (
+          <>
+            <Link
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+              to="/login"
+            >
+              Log In
+            </Link>
+            <Link
+              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+              to="/signup"
+            >
+              Sign up
+            </Link>
+          </>
+        )}
       </nav>
-
       {isMenuOpen && (
         <div className="navbar-menu relative z-50">
           <div
@@ -202,7 +219,7 @@ const Navbar = () => {
                   to="/projects"
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                 >
-                  Projects
+                  Jobs
                 </Link>
               </li>
               <li className="mb-1">

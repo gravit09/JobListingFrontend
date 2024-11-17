@@ -123,7 +123,9 @@ export default function Example() {
         <main className="mx-auto max-w-12xl px-4 sm:px-6 lg:px-12">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-14">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              Open Source Projects
+              {activeRoute == "jobs"
+                ? "Find Your Dream Job"
+                : "Find Your Dream Organisation"}
             </h1>
 
             <div className="flex items-center">
