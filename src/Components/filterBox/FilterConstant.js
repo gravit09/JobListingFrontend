@@ -1,13 +1,8 @@
-export const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Most Stars", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-];
-
 export const Jobfilters = [
   {
     id: "Tech Stack",
     name: "Tech Stack",
+    type: "skills",
     options: [
       { value: "React", label: "React", checked: false },
       { value: "Express", label: "Express", checked: false },

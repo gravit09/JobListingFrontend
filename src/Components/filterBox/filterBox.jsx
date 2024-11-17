@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -6,20 +6,10 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-} from "@heroicons/react/20/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 import ProjectListing from "../ProjectListing/ProjectListing";
-import { sortOptions } from "./FilterConstant";
 import { Jobfilters } from "./FilterConstant";
 import { companyFilters } from "./orgFilterConstants";
 import { useRoute } from "../../store/navRouteStore";
@@ -31,8 +21,38 @@ function classNames(...classes) {
 
 export default function Example() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const { activeRoute } = useRoute();
   const filters = activeRoute === "jobs" ? Jobfilters : companyFilters;
+
+  // Sync the selected filters with the filters on load
+  useEffect(() => {
+    const initialFilters = filters.reduce((acc, section) => {
+      acc[section.id] = section.options
+        .filter((option) => option.checked)
+        .map((option) => option.value);
+      return acc;
+    }, {});
+
+    setSelectedFilters(initialFilters);
+  }, [filters]);
+
+  useEffect(() => {
+    console.log("Selected Filters: ", selectedFilters);
+  }, [selectedFilters]);
+
+  const handleFilterChange = (sectionId, value, checked) => {
+    setSelectedFilters((prevFilters) => {
+      const updatedSection = checked
+        ? [...(prevFilters[sectionId] || []), value] // Add the value if checked
+        : prevFilters[sectionId].filter((v) => v !== value); // Remove the value if unchecked
+
+      return {
+        ...prevFilters,
+        [sectionId]: updatedSection,
+      };
+    });
+  };
 
   return (
     <div className="bg-white">
@@ -97,16 +117,25 @@ export default function Example() {
                         {section.options.map((option, optionIdx) => (
                           <div key={option.value} className="flex items-center">
                             <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
-                              id={`filter-mobile-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
                               type="checkbox"
+                              id={`filter-${section.id}-${optionIdx}`}
+                              name={`${section.id}[]`}
+                              value={option.value}
+                              checked={(
+                                selectedFilters[section.id] || []
+                              ).includes(option.value)}
+                              onChange={(e) =>
+                                handleFilterChange(
+                                  section.id,
+                                  option.value,
+                                  e.target.checked
+                                )
+                              }
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
-                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
+                              htmlFor={`filter-${section.id}-${optionIdx}`}
+                              className="ml-3 text-sm text-gray-600"
                             >
                               {option.label}
                             </label>
@@ -120,6 +149,7 @@ export default function Example() {
             </DialogPanel>
           </div>
         </Dialog>
+
         <main className="mx-auto max-w-12xl px-4 sm:px-6 lg:px-12">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-14">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
@@ -127,52 +157,6 @@ export default function Example() {
                 ? "Find Your Dream Job"
                 : "Find Your Dream Organisation"}
             </h1>
-
-            <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                    />
-                  </MenuButton>
-                </div>
-
-                <MenuItems
-                  transition
-                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                  <div className="py-1">
-                    {sortOptions.map((option) => (
-                      <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
-                          className={classNames(
-                            option.current
-                              ? "font-medium text-gray-900"
-                              : "text-gray-500",
-                            "block px-4 py-2 text-sm data-[focus]:bg-gray-100"
-                          )}
-                        >
-                          {option.name}
-                        </a>
-                      </MenuItem>
-                    ))}
-                  </div>
-                </MenuItems>
-              </Menu>
-
-              <button
-                type="button"
-                onClick={() => setMobileFiltersOpen(true)}
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon aria-hidden="true" className="h-5 w-5" />
-              </button>
-            </div>
           </div>
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
@@ -180,9 +164,9 @@ export default function Example() {
               Products
             </h2>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               {/* Filters */}
-              <form className="hidden lg:block">
+              <form className="hidden lg:block lg:col-span-1">
                 <h3 className="sr-only">Categories</h3>
                 {filters.map((section) => (
                   <Disclosure
@@ -217,6 +201,16 @@ export default function Example() {
                               id={`filter-${section.id}-${optionIdx}`}
                               name={`${section.id}[]`}
                               type="checkbox"
+                              checked={(
+                                selectedFilters[section.id] || []
+                              ).includes(option.value)}
+                              onChange={(e) =>
+                                handleFilterChange(
+                                  section.id,
+                                  option.value,
+                                  e.target.checked
+                                )
+                              }
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
@@ -232,10 +226,11 @@ export default function Example() {
                   </Disclosure>
                 ))}
               </form>
-              {/* This is the Job listing component*/}
-              <div className="lg:col-span-3">
+
+              {/* Project Listing / Organization Listing */}
+              <div className="lg:col-span-4">
                 {activeRoute === "jobs" ? (
-                  <ProjectListing />
+                  <ProjectListing filters={selectedFilters} />
                 ) : (
                   <OrganizationListing />
                 )}

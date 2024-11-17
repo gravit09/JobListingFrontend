@@ -8,8 +8,7 @@ function Footer() {
           <div className="flex flex-col gap-8 xl:gap-14 w-full lg:max-w-full mx-auto">
             <div className="flex flex-col gap-8">
               <h2 className="font-manrope font-bold text-4xl leading-snug text-gray-900 max-[470px]:text-center">
-                Begin Your OpenSource <br />
-                Journey!
+                Begin Your Journey!
               </h2>
               <p className="text-base font-normal text-gray-500 max-[470px]:text-center">
                 Take the First Step Towards Success!
@@ -124,7 +123,7 @@ function Footer() {
             </div>
             <div className="flex  flex-col min-[470px]:flex-row min-[470px]:items-center gap-3">
               <button className="flex items-center max-[470px]:justify-center gap-2 py-3 pr-5 pl-7 rounded-full text-base font-semibold text-white bg-indigo-600 shadow-transparent shadow-sm transition-all duration-500 hover:shadow-yellow-300 hover:bg-indigo-400">
-                Start Project
+                Start Your Job Hunt
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={20}
@@ -193,14 +192,6 @@ function Footer() {
                 Products
               </h6>
               <ul className="flex flex-col max-[470px]:items-center max-[470px]:justify-center gap-6">
-                <li>
-                  <a
-                    href="javascript:;"
-                    className="text-base font-normal max-lg:text-center text-gray-600 whitespace-nowrap transition-all duration-300 hover:text-indigo-700 focus-within:outline-0 focus-within:text-yellow-800"
-                  >
-                    Figma UI System
-                  </a>
-                </li>
                 <li>
                   <a
                     href="javascript:;"
