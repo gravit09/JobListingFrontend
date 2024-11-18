@@ -31,7 +31,6 @@ export default function JobListing() {
       return;
     }
     console.log("Form data submitted:", formData);
-    // You can now send this data to your backend API
   };
 
   return (
