@@ -6,7 +6,7 @@ export const Jobfilters = [
     options: [
       { value: "React", label: "React", checked: false },
       { value: "Express", label: "Express", checked: false },
-      { value: "Django", label: "Django", checked: true },
+      { value: "Django", label: "Django", checked: false },
       { value: "Nodejs", label: "Nodejs", checked: false },
       { value: "Angular", label: "Angular", checked: false },
       { value: "Vuejs", label: "Vuejs", checked: false },
@@ -16,9 +16,9 @@ export const Jobfilters = [
     id: "languages",
     name: "Languages",
     options: [
-      { value: "Javascript", label: "Javascript", checked: false },
+      { value: "JavaScript", label: "JavaScript", checked: false },
       { value: "Python", label: "Python", checked: false },
-      { value: "Java", label: "Java", checked: true },
+      { value: "Java", label: "Java", checked: false },
       { value: "Go", label: "Go", checked: false },
       { value: "C/C++", label: "C/C++", checked: false },
     ],

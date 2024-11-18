@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 const RouteContext = createContext();
 
 export const RouteProvider = ({ children }) => {
-  const storedRoute = localStorage.getItem("activeRoute") || "jobs";
+  const storedRoute = localStorage.getItem("activeRoute") || "/";
   const [activeRoute, setActiveRoute] = useState(storedRoute);
 
   useEffect(() => {

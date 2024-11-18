@@ -1,9 +1,3 @@
-export const companySortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Most Employees", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-];
-
 export const companyFilters = [
   {
     id: "Industry",

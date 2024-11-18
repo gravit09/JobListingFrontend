@@ -8,6 +8,7 @@ import { RouteProvider } from "./store/navRouteStore";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthProvider";
 import Jobs from "./Pages/Projects";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -29,9 +30,13 @@ function App() {
         },
         {
           path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/dashboard",
           element: (
             <ProtectedRoute>
-              <About />
+              <Dashboard />
             </ProtectedRoute>
           ),
         },
