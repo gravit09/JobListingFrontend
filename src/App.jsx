@@ -9,8 +9,10 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthProvider";
 import Jobs from "./Pages/Projects";
 import Dashboard from "./Pages/Dashboard";
-import JobListings from "./Components/Dashboard/JobListing";
 import AppliedJobs from "./Components/Dashboard/AppliedJobs";
+import ListedJobs from "./Components/Dashboard/ListedJobs";
+import Organization from "./Components/Dashboard/Organization";
+import JobListing from "./Components/Dashboard/JobListing";
 
 function App() {
   const router = createBrowserRouter([
@@ -34,23 +36,31 @@ function App() {
           path: "/about",
           element: <About />,
         },
+      ],
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      ),
+      children: [
         {
-          path: "/dashboard",
-          element: (
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          ),
-          children: [
-            {
-              path: "job-listings",
-              element: <JobListings />,
-            },
-            {
-              path: "applied-jobs",
-              element: <AppliedJobs />,
-            },
-          ],
+          path: "job-listings",
+          element: <JobListing />,
+        },
+        {
+          path: "applied-jobs",
+          element: <AppliedJobs />,
+        },
+        {
+          path: "list-job",
+          element: <ListedJobs />,
+        },
+        {
+          path: "organization",
+          element: <Organization />,
         },
       ],
     },

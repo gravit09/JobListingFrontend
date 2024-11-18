@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className="bg-blue-500">
       <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
         <a className="text-3xl font-bold leading-none" href="#">
-          <img src={logo} alt="logo" className="h-10" />
+          <h1>Jobsy..</h1>
         </a>
         <div className="lg:hidden">
           <button
