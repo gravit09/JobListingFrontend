@@ -1,3 +1,4 @@
+import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -5,10 +6,10 @@ export default function JobDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: "Job Listings", href: "#", current: true },
-    { name: "Applied Jobs", href: "#", current: false },
-    { name: "Profile", href: "#", current: false },
-    { name: "Settings", href: "#", current: false },
+    { name: "Job Listings", path: "/dashboard/job-listings" },
+    { name: "Applied Jobs", path: "/dashboard/applied-jobs" },
+    { name: "Profile", path: "/dashboard/profile" },
+    { name: "Settings", path: "/dashboard/settings" },
   ];
 
   return (
@@ -28,17 +29,13 @@ export default function JobDashboard() {
           </div>
           <nav className="mt-4 flex-1 space-y-2 px-4">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
-                className={`block px-4 py-2 rounded-lg text-sm font-semibold ${
-                  item.current
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`}
+                to={item.path}
+                className="block px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-200"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -56,15 +53,7 @@ export default function JobDashboard() {
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Welcome to the Dashboard
-          </h1>
-          <p className="mt-2 text-gray-600">
-            Select an option from the sidebar to manage job listings and
-            applications.
-          </p>
-        </div>
+        <Outlet /> {/* Renders the matched child component */}
       </div>
     </div>
   );

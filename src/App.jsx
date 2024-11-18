@@ -9,6 +9,8 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthProvider";
 import Jobs from "./Pages/Projects";
 import Dashboard from "./Pages/Dashboard";
+import JobListings from "./Components/Dashboard/JobListing";
+import AppliedJobs from "./Components/Dashboard/AppliedJobs";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,6 +41,16 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           ),
+          children: [
+            {
+              path: "job-listings",
+              element: <JobListings />,
+            },
+            {
+              path: "applied-jobs",
+              element: <AppliedJobs />,
+            },
+          ],
         },
       ],
     },
