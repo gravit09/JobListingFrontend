@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function Organization() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ export default function Organization() {
       alert("Please agree to the privacy policy before submitting.");
       return;
     }
+
     console.log("Form data submitted:", formData);
   };
 

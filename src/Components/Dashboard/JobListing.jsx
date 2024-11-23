@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 
 export default function JobListing() {
   const [formData, setFormData] = useState({
@@ -24,11 +24,36 @@ export default function JobListing() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!agreed) {
       alert("Please agree to the privacy policy before submitting.");
       return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:3000/api/job/listjob",
+        {
+          formData,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success) {
+        const token = response.data.token;
+        login(token);
+        navigate("/about");
+        alert("Logged in successfully!");
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
     }
     console.log("Form data submitted:", formData);
   };
