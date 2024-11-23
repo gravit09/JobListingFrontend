@@ -4,8 +4,6 @@ import axios from "axios";
 export default function JobListing() {
   const [formData, setFormData] = useState({
     title: "",
-    organization: "",
-    organizationName: "",
     location: "Remote",
     requirements: {
       experience: "",
@@ -21,8 +19,21 @@ export default function JobListing() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name in formData.requirements) {
+      setFormData({
+        ...formData,
+        requirements: {
+          ...formData.requirements,
+          [name]: value,
+        },
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
+
+  console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,32 +41,43 @@ export default function JobListing() {
       alert("Please agree to the privacy policy before submitting.");
       return;
     }
+    const processedData = {
+      ...formData,
+      requirements: {
+        ...formData.requirements,
+        skills: formData.requirements.skills
+          .split(",")
+          .map((skill) => skill.trim()),
+      },
+      responsibilities: formData.responsibilities
+        .split(",")
+        .map((resp) => resp.trim()),
+    };
+
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(
+      const mainToken = `Bearer ${token}`;
+      console.log(mainToken);
+
+      const response = axios.post(
         "http://localhost:3000/api/job/listjob",
-        {
-          formData,
-        },
+        processedData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
       );
-      if (response.data.success) {
-        const token = response.data.token;
-        login(token);
-        navigate("/about");
-        alert("Logged in successfully!");
+
+      if (response) {
+        console.log(response);
       } else {
         console.error("Login failed");
       }
     } catch (error) {
       console.error("Error logging in:", error);
     }
-    console.log("Form data submitted:", formData);
   };
 
   return (
@@ -82,23 +104,6 @@ export default function JobListing() {
               name="title"
               type="text"
               value={formData.title}
-              onChange={handleInputChange}
-              className="mt-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="organizationName"
-              className="block text-sm font-semibold text-gray-900"
-            >
-              Organization Name
-            </label>
-            <input
-              id="organizationName"
-              name="organizationName"
-              type="text"
-              value={formData.organizationName}
               onChange={handleInputChange}
               className="mt-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
               required
@@ -131,7 +136,7 @@ export default function JobListing() {
               id="experience"
               name="experience"
               type="text"
-              value={formData.experience}
+              value={formData.requirements.experience}
               onChange={handleInputChange}
               className="mt-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
               required
@@ -148,7 +153,7 @@ export default function JobListing() {
               id="skills"
               name="skills"
               type="text"
-              value={formData.skills}
+              value={formData.requirements.skills}
               onChange={handleInputChange}
               className="mt-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
               required
@@ -165,7 +170,7 @@ export default function JobListing() {
               id="qualifications"
               name="qualifications"
               type="text"
-              value={formData.qualifications}
+              value={formData.requirements.qualifications}
               onChange={handleInputChange}
               className="mt-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
               required

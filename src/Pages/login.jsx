@@ -32,6 +32,7 @@ function Login() {
         navigate("/about");
         alert("Logged in successfully!");
       } else {
+        alert("Invalid Credentials");
         console.error("Login failed");
       }
     } catch (error) {
@@ -55,6 +56,7 @@ function Login() {
         setSignIn(true);
         alert("Signup in successfully!");
       } else {
+        alert("User with same credentials already exsist");
         console.error("SignUp failed");
       }
     } catch (error) {

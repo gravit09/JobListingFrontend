@@ -42,7 +42,7 @@ const OrganizationListing = () => {
       {currentOrgs.map((org) => (
         <div
           key={org._id}
-          className="bg-white transform transition-transform duration-300 hover:scale-110 shadow-xl shadow-gray-100 w-full max-w-5xl flex gap-4 items-center px-5 py-4 mb-4 rounded-md"
+          className="bg-white transform transition-transform duration-300 hover:scale-105 shadow-xl shadow-gray-100 w-full max-w-5xl flex gap-4 items-center px-5 py-4 mb-4 rounded-md"
         >
           <img
             src={org.imageUrl}

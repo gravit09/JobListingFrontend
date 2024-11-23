@@ -85,7 +85,7 @@ const ProjectListing = ({ filters }) => {
         currentProjects.map((project) => (
           <div
             key={project._id}
-            className="bg-white transform transition-transform duration-300 hover:scale-110 shadow-xl shadow-gray-100 w-full max-w-6xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between px-5 py-2 mb-4 rounded-md"
+            className="bg-white transform transition-transform duration-300 hover:scale-105 shadow-xl shadow-gray-100 w-full max-w-6xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between px-5 py-2 mb-4 rounded-md"
           >
             <div>
               <h3 className="font-bold">
