@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <section className="pt-16 pb-7 ">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-14 border-b-2 border-gray-200">
           <div className="flex flex-col gap-8 xl:gap-14 w-full lg:max-w-full mx-auto">
             <div className="flex flex-col gap-8">

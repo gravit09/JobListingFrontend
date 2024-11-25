@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "../../assets/logo/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useRoute } from "../../store/navRouteStore";
 import { useAuth } from "../../utils/AuthProvider";
@@ -20,7 +19,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-blue-500">
-      <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
+      <nav className="relative px-4 py-4 z-50 flex justify-between items-center bg-white">
         <a className="text-3xl font-bold leading-none" href="#">
           <h1>Jobsy..</h1>
         </a>

@@ -1,13 +1,15 @@
 import React from "react";
 
-function SearchBar() {
+function SearchBar({ searchText, setSearchText }) {
   return (
     <div className="flex justify-center items-center text-gray-600 relative">
       <input
         type="search"
-        name="search"
+        name="searchText"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
         placeholder="Search"
-        className="bg-white w-30 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+        className="bg-white w-1/3 mt-10 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
       />
       <button
         type="submit"

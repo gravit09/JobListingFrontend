@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { PaperClipIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
 export default function Organization() {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,6 +12,9 @@ export default function Organization() {
   });
 
   const [agreed, setAgreed] = useState(false);
+  const [isOrg, setIsOrg] = useState(false);
+  const [orgData, setOrgData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +31,89 @@ export default function Organization() {
     console.log("Form data submitted:", formData);
   };
 
-  return (
+  useEffect(() => {
+    const isOrgRegisterd = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:3000/api/org/yourOrg",
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.data.message) {
+          setIsOrg(true);
+        }
+        setOrgData(response.data.yourOrgDetails);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    };
+    isOrgRegisterd();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+  const { name, description, imageUrl, size, founded, type } = orgData;
+
+  return isOrg ? (
+    <div>
+      <div className="px-4 sm:px-0">
+        <h3 className="text-base/7 font-semibold text-gray-900">
+          Your Organization Detail
+        </h3>
+        <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">
+          Details and info.
+        </p>
+      </div>
+      <div className="flex justify-center">
+        <img className="h-auto w-1/4" src={imageUrl} alt="Image" />
+      </div>
+
+      <div className="mt-6 border-t border-gray-100">
+        <dl className="divide-y divide-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">
+              Company name
+            </dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {name}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Type</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {type}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">size</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {size}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Founded</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {founded}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Description</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {description}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  ) : (
     <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">

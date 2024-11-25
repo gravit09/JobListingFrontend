@@ -7,7 +7,7 @@ export default function JobDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: "Applied Jobs", path: "/dashboard/applied-jobs" },
+    { name: "Applied Jobs", path: "" },
     { name: "Listed Jobs", path: "/dashboard/list-job" },
     { name: "List Job", path: "/dashboard/job-listings" },
     { name: "Organization", path: "/dashboard/organization" },

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useOutletContext } from "react-router-dom";
 
 const ProjectListing = ({ filters }) => {
   const [projects, setProjects] = useState([]);
@@ -7,6 +8,7 @@ const ProjectListing = ({ filters }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 5;
 
+  const { searchText } = useOutletContext();
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -26,39 +28,52 @@ const ProjectListing = ({ filters }) => {
   // Apply filters based on the props passed
   const applyFilters = (projects) => {
     return projects.filter((project) => {
-      return Object.entries(filters).every(([filterKey, selectedValues]) => {
-        // If there are no selected values for this filter, return true (don't filter out any projects)
-        if (!selectedValues || selectedValues.length === 0) return true;
+      const matchesSearchText = searchText
+        ? project.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          project.description
+            .toLowerCase()
+            .includes(searchText.toLowerCase()) ||
+          project.requirements.skills.some(
+            (skill) =>
+              skill.toLowerCase().includes(searchText.toLowerCase()) ||
+              project.organizationName
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+          )
+        : true;
 
-        // Map filter keys from props to the project attributes
-        if (filterKey === "Tech Stack") {
-          // Check if any of the selected tech stack values match the project's tech stack
-          return selectedValues.some((value) =>
-            project.requirements.skills.includes(value)
-          );
+      // Apply other filters
+      const matchesOtherFilters = Object.entries(filters).every(
+        ([filterKey, selectedValues]) => {
+          if (!selectedValues || selectedValues.length === 0) return true;
+
+          if (filterKey === "Tech Stack") {
+            return selectedValues.some((value) =>
+              project.requirements.skills.includes(value)
+            );
+          }
+
+          if (filterKey === "languages") {
+            return selectedValues.some((value) =>
+              project.requirements.skills.some((skill) => skill.includes(value))
+            );
+          }
+
+          if (filterKey === "others") {
+            return selectedValues.some((value) =>
+              project.requirements.skills.some((skill) => skill.includes(value))
+            );
+          }
+
+          return true;
         }
+      );
 
-        if (filterKey === "languages") {
-          // Check if any of the selected language values match the project's language
-          return selectedValues.some((value) =>
-            project.requirements.skills.some((skill) => skill.includes(value))
-          );
-        }
-
-        if (filterKey === "others") {
-          // Check if any of the selected tags match the project's tags
-          return selectedValues.some((value) =>
-            project.requirements.skills.some((skill) => skill.includes(value))
-          );
-        }
-
-        // If the filterKey doesn't match any known category, return true
-        return true;
-      });
+      // Combine both search text and other filters
+      return matchesSearchText && matchesOtherFilters;
     });
   };
 
-  // Filtered projects based on the applied filters
   const filteredProjects = applyFilters(projects);
 
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);

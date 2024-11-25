@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Button } from "@headlessui/react";
 
 const OrganizationListing = () => {
   const [orgs, setOrgs] = useState([]);
@@ -42,27 +43,53 @@ const OrganizationListing = () => {
       {currentOrgs.map((org) => (
         <div
           key={org._id}
-          className="bg-white transform transition-transform duration-300 hover:scale-105 shadow-xl shadow-gray-100 w-full max-w-5xl flex gap-4 items-center px-5 py-4 mb-4 rounded-md"
+          className="bg-white transform transition-transform duration-300 justify-between hover:scale-105 shadow-xl shadow-gray-100 w-full max-w-5xl flex gap-4 items-center px-5 py-4 mb-4 rounded-md"
         >
-          <img
-            src={org.imageUrl}
-            alt={`${org.name} banner`}
-            className="w-28 h-24 object-contain rounded-md"
-          />
-          <div className="flex flex-col">
-            <h3 className="font-bold">
-              {org.name} |
-              <span className="text-gray-500"> Founded: {org.founded}</span>
-            </h3>
-            <p className="text-gray-700 mt-2">{org.description}</p>
-            <div className="mt-2">
-              <span className="bg-gray-100 text-gray-700 rounded-full text-sm p-2">
-                Size: {org.size}
-              </span>
-              <span className="bg-gray-100 text-gray-700 rounded-full text-sm p-2 ml-2">
-                Type: {org.type}
-              </span>
+          <div>
+            <img
+              src={org.imageUrl}
+              alt={`${org.name} banner`}
+              className="w-28 h-24 object-contain rounded-md"
+            />
+            <div className="flex flex-col">
+              <h3 className="font-bold">
+                {org.name} |
+                <span className="text-gray-500"> Founded: {org.founded}</span>
+              </h3>
+              <p className="text-gray-700 mt-2">{org.description}</p>
+              <div className="mt-2">
+                <span className="bg-gray-100 text-gray-700 rounded-full text-sm p-2">
+                  Size: {org.size}
+                </span>
+                <span className="bg-gray-100 text-gray-700 rounded-full text-sm p-2 ml-2">
+                  Type: {org.type}
+                </span>
+              </div>
             </div>
+          </div>
+          <div>
+            <a
+              //href={project.applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center"
+            >
+              View
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       ))}

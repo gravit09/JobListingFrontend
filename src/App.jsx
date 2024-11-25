@@ -13,28 +13,41 @@ import AppliedJobs from "./Components/Dashboard/AppliedJobs";
 import ListedJobs from "./Components/Dashboard/ListedJobs";
 import Organization from "./Components/Dashboard/Organization";
 import JobListing from "./Components/Dashboard/JobListing";
+import HomeLayout from "./Routes/HomeLayout";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />,
+      element: <HomeLayout />,
       children: [
         {
           path: "/",
           element: <Home />,
         },
         {
-          path: "/jobs",
-          element: <Jobs />,
-        },
-        {
-          path: "/orgs",
-          element: <Organisations />,
-        },
-        {
           path: "/about",
           element: <About />,
+        },
+      ],
+    },
+    {
+      path: "/jobs",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "",
+          element: <Jobs />,
+        },
+      ],
+    },
+    {
+      path: "/orgs",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "",
+          element: <Organisations />,
         },
       ],
     },
@@ -51,7 +64,7 @@ function App() {
           element: <JobListing />,
         },
         {
-          path: "applied-jobs",
+          path: "",
           element: <AppliedJobs />,
         },
         {
