@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button } from "@headlessui/react";
+import { useOutletContext } from "react-router-dom";
 
-const OrganizationListing = () => {
+const OrganizationListing = ({ filters }) => {
   const [orgs, setOrgs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const orgsPerPage = 5;
+
+  const { searchText } = useOutletContext();
 
   useEffect(() => {
     const fetchOrgs = async () => {
@@ -17,16 +19,49 @@ const OrganizationListing = () => {
         setOrgs(response.data.allOrgs);
         setLoading(false);
       } catch (error) {
+        console.error("Error fetching organizations:", error);
         setLoading(false);
       }
     };
     fetchOrgs();
   }, []);
 
-  const totalPages = Math.ceil(orgs.length / orgsPerPage);
+  const applyFilters = (orgs) => {
+    return orgs.filter((org) => {
+      const matchesSearchText = searchText
+        ? org.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          org.description.toLowerCase().includes(searchText.toLowerCase())
+        : true;
+
+      const matchesOtherFilters = Object.entries(filters).every(
+        ([filterKey, selectedValues]) => {
+          if (!selectedValues || selectedValues.length === 0) return true;
+
+          if (filterKey === "Industry") {
+            return selectedValues.some((value) =>
+              org.description.toLowerCase().includes(value.toLowerCase())
+            );
+          }
+
+          if (filterKey === "Company Size") {
+            return selectedValues.some((value) =>
+              org.size.toLowerCase().includes(value.toLowerCase())
+            );
+          }
+          return true;
+        }
+      );
+
+      return matchesSearchText && matchesOtherFilters;
+    });
+  };
+
+  const filteredOrgs = applyFilters(orgs);
+
+  const totalPages = Math.ceil(filteredOrgs.length / orgsPerPage);
   const indexOfLastOrg = currentPage * orgsPerPage;
   const indexOfFirstOrg = indexOfLastOrg - orgsPerPage;
-  const currentOrgs = orgs.slice(indexOfFirstOrg, indexOfLastOrg);
+  const currentOrgs = filteredOrgs.slice(indexOfFirstOrg, indexOfLastOrg);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -69,7 +104,7 @@ const OrganizationListing = () => {
           </div>
           <div>
             <a
-              //href={project.applyLink}
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center"

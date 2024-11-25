@@ -232,7 +232,7 @@ export default function Example() {
                 {activeRoute === "jobs" ? (
                   <ProjectListing filters={selectedFilters} />
                 ) : (
-                  <OrganizationListing />
+                  <OrganizationListing filters={selectedFilters} />
                 )}
               </div>
             </div>

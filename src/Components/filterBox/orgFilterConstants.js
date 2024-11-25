@@ -23,18 +23,7 @@ export const companyFilters = [
       { value: "1000+", label: "1000+ Employees", checked: false },
     ],
   },
-  {
-    id: "Location",
-    name: "Location",
-    options: [
-      { value: "Remote", label: "Remote", checked: false },
-      { value: "USA", label: "USA", checked: false },
-      { value: "India", label: "India", checked: false },
-      { value: "Germany", label: "Germany", checked: false },
-      { value: "UK", label: "UK", checked: false },
-      { value: "Canada", label: "Canada", checked: false },
-    ],
-  },
+
   {
     id: "Company Type",
     name: "Company Type",
