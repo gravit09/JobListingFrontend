@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { useAuth } from "../../utils/AuthProvider";
 
 const ProjectListing = ({ filters }) => {
   const [projects, setProjects] = useState([]);
@@ -8,6 +9,8 @@ const ProjectListing = ({ filters }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 5;
 
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const { searchText } = useOutletContext();
   useEffect(() => {
     const fetchProjects = async () => {
@@ -74,6 +77,14 @@ const ProjectListing = ({ filters }) => {
     });
   };
 
+  const redirectHandler = (applyLink) => {
+    if (isAuthenticated) {
+      window.open(applyLink, "_blank");
+    } else {
+      navigate("/login");
+    }
+  };
+
   const filteredProjects = applyFilters(projects);
 
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
@@ -122,12 +133,11 @@ const ProjectListing = ({ filters }) => {
                 ))}
               </div>
             </div>
+
             <div>
               <a
-                href={project.applyLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center"
+                onClick={() => redirectHandler(project.applyLink)}
+                className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center cursor-pointer"
               >
                 Apply
                 <svg
