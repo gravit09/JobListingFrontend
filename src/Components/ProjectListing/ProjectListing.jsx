@@ -77,9 +77,28 @@ const ProjectListing = ({ filters }) => {
     });
   };
 
-  const redirectHandler = (applyLink) => {
+  const redirectHandler = async (applyLink, jobId) => {
     if (isAuthenticated) {
       window.open(applyLink, "_blank");
+
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          "http://localhost:3000/api/user/apply",
+          {
+            jobId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        alert(response.data.message);
+      } catch (error) {
+        console.error(error);
+        alert(error.response?.data?.message || "Something went wrong");
+      }
     } else {
       navigate("/login");
     }
@@ -136,7 +155,7 @@ const ProjectListing = ({ filters }) => {
 
             <div>
               <a
-                onClick={() => redirectHandler(project.applyLink)}
+                onClick={() => redirectHandler(project.applyLink, project._id)}
                 className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center cursor-pointer"
               >
                 Apply
